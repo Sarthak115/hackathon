@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototype</title>
+<link rel="stylesheet" href="seed.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+    }
+    .header-container, .footer-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .search-container {
+        margin: 20px auto;
+        text-align: left;
+        max-width: 600px;
+    }
+    .search-container input, .search-container button {
+        padding: 10px;
+        font-size: 16px;
+    }
+    .search-container input {
+        width: 70%;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    .search-container button {
+        width: 25%;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .suggestions, #seed-info {
+        text-align: left;
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .plant-detail img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+    }
+    .order-button {
+        display: none;
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+<header>
+    <div class="header-container">
+        <h1>KrishiGenius</h1>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="orders.html">My Orders</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="search-section">
+        <div class="search-container">
+            <input type="text" id="plant-name" placeholder="Search for seeds or plants...">
+            <button class="search-button" onclick="getPlantInfo()">Search</button>
+            <div class="suggestions">
+                <h3>Suggestions based on your location:</h3>
+                <ul id="suggestion-list">
+                    <!-- Suggestions will be populated here -->
+                </ul>
+            </div>
+        </div>
+        <div id="seed-info"></div>
+        <button class="order-button" id="order-button" onclick="placeOrder()">Place Order</button>
+    </section>
+</main>
+
+ 
+
+<script>
+    const apiKey = 'sk-YYc366bd922080bdd6528';
+
+    async function getPlantInfo() {
+        const plantName = document.getElementById('plant-name').value.trim();
+        const seedInfoDiv = document.getElementById('seed-info');
+        const orderButton = document.getElementById('order-button');
+        seedInfoDiv.innerHTML = '';
+        orderButton.style.display = 'none';
+
+        if (!plantName) {
+            seedInfoDiv.innerHTML = '<p>Please enter a plant or seed name.</p>';
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://perenual.com/api/species-list?key=${apiKey}&q=${encodeURIComponent(plantName)}`);
+            const data = await response.json();
+
+            if (data.data.length === 0) {
+                seedInfoDiv.innerHTML = '<p>No information found for this search. Please try a different name.</p>';
+                return;
+            }
+
+            const plant = data.data[0];
+            seedInfoDiv.innerHTML = `
+                <div class="plant-detail">
+                    <h2>${plant.common_name || 'No common name available'}</h2>
+                    <p><strong>Scientific Name:</strong> ${plant.scientific_name || 'N/A'}</p>
+                    <p><strong>Family:</strong> ${plant.family || 'N/A'}</p>
+                    <img src="${plant.default_image ? plant.default_image.original_url : 'https://via.placeholder.com/400x300?text=No+Image'}" alt="${plant.common_name}">
+                </div>
+            `;
+
+            // Show the Place Order button if a seed is found
+            orderButton.style.display = 'block';
+        } catch (error) {
+            seedInfoDiv.innerHTML = `<p>Error retrieving information. Please try again later.</p>`;
+            console.error('Error:', error);
+        }
+    }
+
+    function placeOrder() {
+        const plantName = document.getElementById('plant-name').value.trim();
+        const order = {
+            name: plantName,
+            date: new Date().toLocaleDateString()
+        };
+
+        // Save order to local storage
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        orders.push(order);
+        localStorage.setItem('orders', JSON.stringify(orders));
+
+        alert('Order placed successfully!');
+        document.getElementById('plant-name').value = ''; // Clear input field
+        document.getElementById('seed-info').innerHTML = ''; // Clear seed info
+        document.getElementById('order-button').style.display = 'none'; // Hide the button
+    }
+
+    async function fetchWeather(latitude, longitude) {
+        const weatherApiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`;
+
+        try {
+            const response = await fetch(weatherApiUrl);
+            const data = await response.json();
+
+            if (data.current_weather) {
+                updateSuggestions(data.current_weather.weathercode);
+            } else {
+                alert('Weather information is unavailable.');
+            }
+        } catch (error) {
+            console.error('Error fetching weather:', error);
+            alert('Error fetching weather.');
+        }
+    }
+
+    function updateSuggestions(weatherCode) {
+        const suggestionsList = document.getElementById('suggestion-list');
+        suggestionsList.innerHTML = ''; // Clear previous suggestions
+
+        const weatherDescription = getWeatherDescription(weatherCode);
+        let suggestions = [];
+
+        // Suggest plants based on weather description
+        if (weatherCode === 0) { // Clear sky
+            suggestions = ['Tomato', 'Lettuce', 'Bell Pepper', 'Cucumber', 'Strawberry', 'Mint', 'Basil', 'Oregano'];
+        } else if (weatherCode === 1 || weatherCode === 2) { // Mainly clear or Partly cloudy
+            suggestions = ['Cabbage', 'Cauliflower', 'Carrot', 'Beetroot', 'Spinach', 'Coriander', 'Chili Pepper', 'Garlic'];
+        } else if (weatherCode === 3) { // Overcast
+            suggestions = ['Potato', 'Onion', 'Radish', 'Peas', 'Zucchini', 'Rosemary', 'Thyme', 'Parsley'];
+        } else {
+            suggestions = ['Moringa', 'Sweet Potato', 'Fenugreek', 'Amaranth', 'Kale', 'Arugula', 'Chives', 'Dandelion'];
+        }
+
+        // Populate the suggestions list
+        suggestions.forEach(plant => {
+            const listItem = document.createElement('li');
+            listItem.textContent = plant;
+            suggestionsList.appendChild(listItem);
+        });
+    }
+
+    function getWeatherDescription(weatherCode) {
+        const descriptions = {
+            0: "Clear sky",
+            1: "Mainly clear",
+            2: "Partly cloudy",
+            3: "Overcast",
+            45: "Fog",
+            48: "Depositing rime fog",
+            51: "Light drizzle",
+            53: "Moderate drizzle",
+            55: "Dense drizzle",
+            61: "Slight rain",
+            63: "Moderate rain",
+            65: "Heavy rain",
+            71: "Slight snow",
+            73: "Moderate snow",
+            75: "Heavy snow",
+            80: "Slight rain showers",
+            81: "Moderate rain showers",
+            82: "Violent rain showers"
+        };
+        return descriptions[weatherCode] || "Unknown weather condition";
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                fetchWeather(latitude, longitude);
+            });
+        }
+    });
+</script>
+</body>
+</html>

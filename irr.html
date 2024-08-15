@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KrishiGenius</title>
+    <link rel="stylesheet" href="irr.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .header-container, .footer-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .login-container {
+            margin: 20px auto;
+        }
+        .cta-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-container">
+        <h1>KrishiGenius</h1>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="login">
+        <div class="login-container">
+            <button class="cta-button" onclick="redirectToRandomDripSite()">Drip Irrigation</button>
+            <button class="cta-button" onclick="redirectToRandomSprinklerSite()">Sprinkler Irrigation</button>
+        </div>
+    </section>
+</main>
+
+<script>
+    function redirectToRandomDripSite() {
+        const dripUrls = [
+            'https://www.amazon.in/s?k=drip+irrigation',
+            'https://www.flipkart.com/search?q=drip+irrigation',
+            'https://www.homedepot.com/b/Outdoors-Garden-Center-Irrigation-Drip-Irrigation/N-5yc1vZc7n2',
+            'https://www.lowes.com/search?searchTerm=drip+irrigation',
+            'https://www.ebay.com/sch/i.html?_nkw=drip+irrigation+system',
+            'https://www.alibaba.com/showroom/drip-irrigation-system.html',
+            'https://www.trees.com/gardening-and-landscaping/drip-irrigation-systems',
+            'https://www.gardeners.com/buy/drip-irrigation/5077430.html',
+            'https://www.waterwise.com/collections/drip-irrigation',
+            'https://www.rainbird.com/products/drip-irrigation'
+        ];
+        
+        // Select a random URL from the array
+        const randomUrl = dripUrls[Math.floor(Math.random() * dripUrls.length)];
+        
+        // Redirect the user to the selected URL
+        window.location.href = randomUrl;
+    }
+
+    function redirectToRandomSprinklerSite() {
+        const sprinklerUrls = [
+            'https://www.amazon.in/s?k=garden+sprinkler',
+            'https://www.flipkart.com/search?q=garden+sprinkler',
+            'https://www.homedepot.com/b/Outdoors-Garden-Center-Irrigation-Sprinkler-Irrigation/N-5yc1vZc7n3',
+            'https://www.lowes.com/search?searchTerm=sprinkler+irrigation',
+            'https://www.ebay.com/sch/i.html?_nkw=garden+sprinkler',
+            'https://www.alibaba.com/showroom/sprinkler-irrigation-system.html',
+            'https://www.trees.com/gardening-and-landscaping/sprinkler-systems',
+            'https://www.gardeners.com/buy/sprinkler-systems/5077431.html',
+            'https://www.rainbird.com/products/sprinkler-irrigation',
+            'https://www.greenhousemegastore.com/product/sprinkler-systems'
+        ];
+        
+        // Select a random URL from the array
+        const randomUrl = sprinklerUrls[Math.floor(Math.random() * sprinklerUrls.length)];
+        
+        // Redirect the user to the selected URL
+        window.location.href = randomUrl;
+    }
+</script>
+</body>
+</html>

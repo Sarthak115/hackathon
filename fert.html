@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fertilizer Suggestions | KrishiGenius</title>
+    <link rel="stylesheet" href="main.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .header-container, .footer-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .fert-container {
+            margin: 20px auto;
+            text-align: left;
+            max-width: 800px;
+        }
+        .fert-container ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .fert-container li {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .order-btn {
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1>KrishiGenius</h1>
+            <nav>
+                <ul>
+                   <li><a href="orders.html">My Orders</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="fert-section">
+            <div class="fert-container" id="fert-suggestions">
+                <h2>Recommended Fertilizers Based on Current Weather</h2>
+                <p>Loading suggestions...        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                document.getElementById('fert-suggestions').innerHTML = "<p>Geolocation is not supported by this browser.</p>";
+            }
+        });
+
+        function showPosition(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            fetchWeather(latitude, longitude);
+        }
+
+        function fetchWeather(latitude, longitude) {
+            const weatherApiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`;
+
+            fetch(weatherApiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.current_weather) {
+                        const temperature = data.current_weather.temperature;
+                        const windSpeed = data.current_weather.windspeed;
+                        const weatherCode = data.current_weather.weathercode;
+
+                        const climateType = getClimateType(temperature, windSpeed, weatherCode);
+                        suggestFertilizers(climateType);
+                    } else {
+                        document.getElementById('fert-suggestions').innerHTML = "<p>Weather information is unavailable.</p>";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching weather:', error);
+                    document.getElementById('fert-suggestions').innerHTML = "<p>Error fetching weather data.</p>";
+                });
+        }
+
+        function getClimateType(temperature, windSpeed, weatherCode) {
+            if (weatherCode >= 0 && weatherCode <= 3) {
+                if (temperature > 30) return 'Hot and Dry';
+                else if (temperature > 20) return 'Warm and Dry';
+                else return 'Cool and Dry';
+            } else if (weatherCode >= 45 && weatherCode <= 82) {
+                if (temperature > 25) return 'Humid and Warm';
+                else return 'Humid and Cool';
+            } else {
+                if (temperature > 20) return 'Wet and Warm';
+                else return 'Wet and Cool';
+            }
+        }
+
+        function suggestFertilizers(climateType) {
+            const suggestionsContainer = document.getElementById('fert-suggestions');
+            suggestionsContainer.innerHTML = `<h3>Climate Type: ${climateType}</h3>`;
+
+            const fertilizers = {
+                'Hot and Dry': ["Urea", "Potash", "Bone Meal"],
+                'Warm and Dry': ["Ammonium Nitrate", "Gypsum", "Calcium Nitrate"],
+                'Cool and Dry': ["Rock Phosphate", "Bone Meal", "Compost"],
+                'Humid and Warm': ["NPK 19:19:19", "DAP", "Organic Manure"],
+                'Humid and Cool': ["Compost", "Bio-fertilizers", "Zinc Sulphate"],
+                'Wet and Warm': ["Seaweed Extract", "Potash", "Phosphoric Fertilizers"],
+                'Wet and Cool': ["Vermicompost", "Sulphur", "SSP"],
+            };
+
+            const selectedFertilizers = fertilizers[climateType] || ["General Purpose Fertilizer", "Compost", "Neem Cake"];
+            const ul = document.createElement('ul');
+            selectedFertilizers.forEach(fertilizer => {
+                const li = document.createElement('li');
+                li.innerHTML = `${fertilizer} <button class="order-btn" onclick="orderFertilizer('${fertilizer}')">Order Now</button>`;
+                ul.appendChild(li);
+            });
+            suggestionsContainer.appendChild(ul);
+        }
+
+        function orderFertilizer(fertilizerName) {
+            const order = {
+                name: fertilizerName,
+                date: new Date().toLocaleDateString()
+            };
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push(order);
+            localStorage.setItem('orders', JSON.stringify(orders));
+            alert(`${fertilizerName} has been added to your orders.`);
+        }
+
+        function showError(error) {
+            const errorMessage = {
+                1: "User denied the request for Geolocation.",
+                2: "Location information is unavailable.",
+                3: "The request to get user location timed out.",
+                0: "An unknown error occurred."
+            };
+            document.getElementById('fert-suggestions').innerHTML = `<p>${errorMessage[error.code] || errorMessage[0]}</p>`;
+        }
+    </script>
+</body>
+</html>

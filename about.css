@@ -1,0 +1,104 @@
+/* Global Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: url('leaf-pattern.jpg') no-repeat center center fixed;
+    background-size: cover;
+    overflow-x: hidden;
+}
+
+/* Header Styles */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #4CAF50;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #f5f5f5;
+}
+
+/* Main Content Styles */
+.content-container {
+    padding: 20px; /* Reduced padding */
+    max-width: 600px; /* Same width for both boxes */
+    margin: 20px auto; /* Centered with margin */
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.features-box {
+    height: auto; /* Adjusts height to fit text only */
+}
+
+.features, .purpose {
+    margin-bottom: 30px;
+}
+
+.features h2, .purpose h2 {
+    color: #4CAF50;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.features p, .purpose p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Footer Styles */
+.footer-container {
+    background: #4CAF50; /* Green background */
+    color: #fff; /* White text color */
+    text-align: center; /* Center-align text */
+    padding: 20px 20px;
+    margin-top: 20px;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+}
+
+.developer-names {
+    text-align: center; /* Center-align developer names */
+    margin-bottom: 10px;
+}
+
+.developer-names p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #fff;
+    font-weight: bold; /* Bold developer names */
+}

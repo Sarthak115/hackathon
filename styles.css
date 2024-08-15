@@ -1,0 +1,109 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: url('leaf-pattern.jpg') no-repeat center center fixed;
+    background-size: cover;
+    overflow-x: hidden;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #4CAF50;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8em;
+    flex-shrink: 0;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #f5f5f5;
+}
+
+.hero {
+    background: rgba(255, 255, 255, 0.8); /* Slightly transparent white background for contrast */
+    min-height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 80px; /* Offset for fixed header */
+}
+
+.hero-content {
+    background: #fff; /* White background for the tracking box */
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #333; /* Ensure text is readable on white background */
+    display: inline-block;
+}
+
+.hero-content h2 {
+    font-size: 3em;
+    margin: 0;
+    line-height: 1.2;
+    color: #333;
+}
+
+.hero-content form {
+    margin-top: 20px;
+}
+
+.hero-content input[type="text"] {
+    padding: 10px;
+    font-size: 1em;
+    width: 300px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.hero-content button {
+    background: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.hero-content button:hover {
+    background: #388E3C;
+}
+
+.footer-container {
+    background: #4CAF50;
+    color: #fff;
+    text-align: center;
+    padding: 10px 20px;
+}

@@ -1,0 +1,130 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    overflow-x: hidden;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #4CAF50;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8em;
+    flex-shrink: 0;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #f5f5f5;
+}
+
+.hero {
+    background-image: url('leaf-pattern.jpg'); /* Leaf pattern image */
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 80px; /* Offset for fixed header */
+}
+
+.hero-content {
+    background: rgba(255, 255, 255, 0.9); /* Slightly more opaque box */
+    padding: 40px 60px; /* Increased padding */
+    border-radius: 15px; /* Slightly more rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Larger shadow */
+    max-width: 80%; /* Responsive width */
+    margin: 0 auto; /* Center align */
+}
+
+.hero-content h2 {
+    font-size: 3em;
+    margin: 0;
+    line-height: 1.2;
+    color: #4CAF50; /* Dark green text color */
+}
+
+.hero-content p {
+    font-size: 1.2em;
+    margin: 20px 0;
+    max-width: 600px;
+    color: #333; /* Dark text color */
+}
+
+.cta-button {
+    background: #4CAF50;
+    color: #fff;
+    padding: 10px 30px;
+    text-decoration: none;
+    font-size: 1.2em;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s, color 0.3s;
+}
+
+.cta-button:hover {
+    background: #fff;
+    color: #4CAF50;
+}
+
+.info {
+    padding: 50px 20px;
+    background: #fff;
+    text-align: center;
+}
+
+.info-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.info h2 {
+    color: #4CAF50;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.info p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: #666;
+}
+
+.footer-container {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 20px;
+}

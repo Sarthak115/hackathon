@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protype - Login</title>
+    <link rel="stylesheet" href="login.css">
+    <style>
+        /* Center the email verification widget */
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 30vh;
+        }
+
+        .pe_verify_email {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1>KrishiGenius</h1>
+            <nav>
+                <ul>
+                    <li><a href="javascript:history.back()">Back</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="login">
+            <div class="login-container">
+                <h2>Login</h2>
+                <!-- Phone.email verification widget -->
+                <div class="pe_verify_email" data-client-id="19015761374181846830">
+                    <script src="https://www.phone.email/verify_email_v1.js" async></script>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2024 KrishiGenius. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function phoneEmailReceiver(userObj){
+            var user_json_url = userObj.user_json_url;
+            
+            // Automatically redirect to main.html and replace history to prevent going back to login page
+            window.location.replace('main.html');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+/* Global Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: url('leaf-pattern.jpg') no-repeat center center fixed;
+    background-size: cover; /* Ensure the image covers the entire background */
+    overflow-x: hidden;
+}
+
+/* Header Styles */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #4CAF50; /* Green header */
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8em;
+    flex-shrink: 0;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px; /* Space between the menu items */
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    margin: 0;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #f5f5f5;
+}
+
+/* Search Section Styles */
+.search-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px); /* Full viewport height minus header height */
+    padding-top: 80px; /* Offset for fixed header */
+}
+
+.search-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px 60px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 600px; /* Limit the maximum width */
+    width: 100%;
+    margin: 0 auto; /* Center align */
+    text-align: center;
+}
+
+.search-container input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    width: calc(100% - 120px); /* Adjust width to fit button next to it */
+    margin-right: 10px;
+    margin-bottom: 10px; /* Margin below the search bar */
+}
+
+.search-button {
+    background: #4CAF50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    width: 100px;
+    transition: background 0.3s, color 0.3s;
+    margin-bottom: 10px; /* Add margin to separate from suggestions */
+}
+
+.search-button:hover {
+    background: #fff;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+}
+
+.suggestions {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.suggestions h3 {
+    color: #4CAF50;
+}
+
+.suggestions ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.suggestions ul li {
+    background: #f5f5f5;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Footer Styles */
+.footer-container {
+    background: #4CAF50; /* Green background */
+    color: #fff; /* White text color */
+    text-align: center; /* Center-align text */
+    padding: 10px 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
